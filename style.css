@@ -1,0 +1,53 @@
+:root { color-scheme: dark; --ivory: #eeeadf; --muted: #a2afa2; --pink: #dc98b4; }
+* { box-sizing: border-box; }
+html, body { margin: 0; min-height: 100%; }
+body { background: #101915; color: var(--ivory); font-family: Arial, Helvetica, sans-serif; -webkit-tap-highlight-color: transparent; }
+button, a { -webkit-tap-highlight-color: transparent; }
+button { font: inherit; }
+button:focus-visible, a:focus-visible { outline: 1px solid var(--pink); outline-offset: 8px; border-radius: 4px; }
+.garden { isolation: isolate; position: relative; min-height: 760px; height: 100svh; overflow: hidden; background: radial-gradient(ellipse at 50% 36%, #24362c 0%, #17251e 30%, #101915 64%, #0b120f 100%); }
+.garden::after { content: ''; pointer-events: none; position: absolute; inset: 0; z-index: 5; opacity: .045; background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' opacity='.55' filter='url(%23n)'/%3E%3C/svg%3E"); }
+.atmosphere { position: absolute; inset: 0; z-index: -1; pointer-events: none; }
+.atmosphere i { position: absolute; width: 20vw; height: 20vw; background: #72784a; border-radius: 50%; filter: blur(90px); opacity: .05; }
+.atmosphere i:nth-child(1) { left: 2%; top: 28%; }
+.atmosphere i:nth-child(2) { right: 8%; top: 12%; width: 14vw; background: #d19cad; }
+.atmosphere i:nth-child(3) { right: 5%; bottom: 8%; }
+.fireflies { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 1; pointer-events: none; }
+.title-block { position: absolute; top: 34px; left: 24px; right: 24px; text-align: center; pointer-events: none; z-index: 2; }
+h1 { max-width: 600px; margin: 0 auto; font-family: Georgia, 'Times New Roman', serif; font-weight: 400; font-size: 13px; line-height: 1.55; letter-spacing: 0; text-wrap: pretty; }
+.specimen { position: absolute; left: 50%; top: 52%; width: min(760px, 80vh, 90vw); height: min(830px, 87.4vh, 98.3vw); transform: translate(-50%, -43%); z-index: 2; }
+.flower-button { display: block; width: 100%; height: 100%; border: 0; padding: 0; background: transparent; color: inherit; cursor: pointer; touch-action: manipulation; }
+.flower-button:focus-visible { outline-offset: -45px; }
+.lily { display: block; width: 100%; height: 100%; overflow: visible; }
+.plant-sway { transform-origin: 390px 790px; }
+.garden[data-state="open"] .plant-sway { animation: breeze 8s ease-in-out infinite; }
+.petal { transform-origin: 0px 0px; }
+.petal-unfurl { transform-origin: 0px 0px; }
+.garden[data-state="opening"] .petal-unfurl { animation: petal-unfurl var(--petal-duration) ease-in-out var(--petal-delay) both; }
+.garden[data-state="closing"] .petal-unfurl { animation: petal-unfurl var(--petal-close-duration) ease-in-out 0s reverse both; }
+.petal-surface { filter: url(#petal-shadow); }
+.petal-vein { fill: none; stroke: #fff1d9; stroke-width: .65; opacity: .18; }
+.petal-rib { fill: none; stroke: #721c48; stroke-width: .7; opacity: .19; }
+.petal-grain { opacity: .075; filter: url(#petal-grain); pointer-events: none; }
+.sepal { filter: url(#petal-shadow); }
+.interaction { position: absolute; bottom: 91px; left: 50%; width: 290px; transform: translateX(-50%); text-align: center; z-index: 3; }
+.bloom-control { border: 1px solid #81957c40; border-radius: 40px; background: #142019b3; color: #e4e5d9; min-height: 46px; padding: 11px 23px; display: inline-flex; gap: 10px; align-items: center; justify-content: center; font-size: 14px; letter-spacing: .015em; cursor: pointer; transition: border-color .4s, background .4s, color .4s; touch-action: manipulation; }
+.bloom-control:hover { border-color: #c69dab80; background: #263329b3; }
+.touch-icon svg { display: block; width: 18px; height: 18px; fill: none; stroke: #bcceaf; stroke-width: 1.2; stroke-linecap: round; stroke-linejoin: round; }
+.garden[data-state="opening"] .touch-icon, .garden[data-state="closing"] .touch-icon { animation: patience 2s ease-in-out infinite; }
+.bloom-control[aria-disabled="true"] { cursor: wait; }
+.sr-only { position: absolute; width: 1px; height: 1px; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; }
+@keyframes breeze { 0%, 100% { transform: rotate(0deg); } 30% { transform: rotate(.85deg); } 72% { transform: rotate(-.65deg); } }
+@keyframes petal-unfurl { 0%, 100% { transform: skewX(0deg); } 38% { transform: skewX(-2deg); } 73% { transform: skewX(1deg); } }
+@keyframes patience { 0%,100% { opacity: .5; } 50% { opacity: 1; } }
+@media (min-height: 950px) { .specimen { top: 49%; } .interaction { bottom: 112px; } }
+@media (max-width: 600px) {
+  .garden { min-height: 650px; }
+  .title-block { top: 32px; left: 18px; right: 18px; }
+  h1 { max-width: 380px; font-size: 12px; }
+  .specimen { width: 117vw; height: 127.8vw; max-width: 630px; max-height: 688px; top: 47%; transform: translate(-50%, -35%); }
+  .interaction { bottom: 78px; }
+}
+@media (max-height: 740px) and (min-width: 601px) { .garden { min-height: 560px; } .title-block { top: 18px; } h1 { max-width: 760px; font-size: 12px; line-height: 1.45; } .interaction { bottom: 67px; } .specimen { top: 47%; } }
+@media (max-height: 730px) and (max-width: 600px) { .title-block { top: 18px; } h1 { font-size: 11px; line-height: 1.4; } .specimen { top: 42%; width: 107vw; height: 116.8vw; } .interaction { bottom: 73px; } }
+@media (prefers-reduced-motion: reduce) { .garden[data-state="open"] .plant-sway, .petal-unfurl, .touch-icon { animation: none !important; } }
